@@ -1,0 +1,12 @@
+# OASIS_START
+# DO NOT EDIT (digest: 5cea39de9e614dde1a176d721a88a75f)
+version = "0.1"
+description = "Simple reader for ODC format CPIO archives"
+requires = "bigarray uint"
+archive(byte) = "cpio_odc.cma"
+archive(byte, plugin) = "cpio_odc.cma"
+archive(native) = "cpio_odc.cmxa"
+archive(native, plugin) = "cpio_odc.cmxs"
+exists_if = "cpio_odc.cma"
+# OASIS_STOP
+

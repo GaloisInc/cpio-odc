@@ -1,0 +1,17 @@
+OASISFormat: 0.3
+Name:        cpio-odc
+Version:     0.1
+Synopsis:    Simple reader for ODC format CPIO archives
+Authors:     Galois, Inc.
+License:     PROP
+Plugins:     META (0.3)
+BuildTools:  ocamlbuild
+
+Library cpio_odc
+  CompiledObject:   best
+  Path:             src
+  Findlibname:      cpio-odc
+  BuildTools:       ocamlbuild
+  Modules:          Cpio
+  BuildDepends:     bigarray, uint
+
