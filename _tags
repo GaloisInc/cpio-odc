@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: bf91dc2e00137a634f9760cc49a09dc2)
+# DO NOT EDIT (digest: 4fb1faefd0cdcad0246c59df2bfc1c45)
 # Ignore VCS directories, you can use the same kind of rule outside
 # OASIS_START/STOP if you want to exclude directories that contains
 # useless stuff for the build process
@@ -16,5 +16,4 @@
 # Library cpio_odc
 "src/cpio_odc.cmxs": use_cpio_odc
 <src/*.ml{,i}>: pkg_bigarray
-<src/*.ml{,i}>: pkg_uint
 # OASIS_STOP
