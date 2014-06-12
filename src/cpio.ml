@@ -9,23 +9,23 @@
 
 open Bigarray
 open Printf
-open Uint32
+open Int32
 
 type buffer = (char, int8_unsigned_elt, c_layout) Array1.t
 
 (** Header for the CPIO portable ASCII (odc) format. *)
 type header =
-  { c_magic     : uint32
-  ; c_dev       : uint32
-  ; c_ino       : uint32
-  ; c_mode      : uint32
-  ; c_uid       : uint32
-  ; c_gid       : uint32
-  ; c_nlink     : uint32
-  ; c_rdev      : uint32
-  ; c_mtime     : uint32
-  ; c_namesize  : uint32
-  ; c_filesize  : uint32
+  { c_magic     : int32
+  ; c_dev       : int32
+  ; c_ino       : int32
+  ; c_mode      : int32
+  ; c_uid       : int32
+  ; c_gid       : int32
+  ; c_nlink     : int32
+  ; c_rdev      : int32
+  ; c_mtime     : int32
+  ; c_namesize  : int32
+  ; c_filesize  : int32
   }
 
 (** Size of the header in bytes. *)
@@ -50,13 +50,13 @@ let ba_to_string ba =
 (** Decode "len" characters of an octal string at "offset"
  * from "ba". *)
 let decode offset len ba =
-  let result = ref Uint32.zero in
+  let result = ref Int32.zero in
   for i = 0 to len - 1 do
     let ch = ba.{offset + i} in
     if ch >= '0' && ch <= '7' then begin
-      let n = Uint32.of_int (int_of_char ch - int_of_char '0') in
-      result := Uint32.mul !result (Uint32.of_int 8);
-      result := Uint32.add !result n
+      let n = Int32.of_int (int_of_char ch - int_of_char '0') in
+      result := Int32.mul !result (Int32.of_int 8);
+      result := Int32.add !result n
     end else
       raise (Invalid_argument "bad octal string")
   done;
@@ -85,8 +85,8 @@ let is_last_entry e =
  * entry and the offset of the next header. *)
 let get_entry offset ba =
   let hdr       = get_header offset ba in
-  let name_size = Uint32.to_int hdr.c_namesize in
-  let file_size = Uint32.to_int hdr.c_filesize in
+  let name_size = Int32.to_int hdr.c_namesize in
+  let file_size = Int32.to_int hdr.c_filesize in
   let name_ba   = Array1.sub ba (offset + header_size) (name_size - 1) in
   let name      = ba_to_string name_ba in
   let file      = Array1.sub ba (offset + header_size + name_size) file_size in
@@ -134,17 +134,17 @@ let find_file filename ba =
 
 (** Print a CPIO header for debugging. *)
 let print_header hdr =
-  printf "magic:    %#o\n" (Uint32.to_int hdr.c_magic);
-  printf "dev:      %u\n"  (Uint32.to_int hdr.c_dev);
-  printf "ino:      %u\n"  (Uint32.to_int hdr.c_ino);
-  printf "mode:     %#o\n" (Uint32.to_int hdr.c_mode);
-  printf "uid:      %u\n"  (Uint32.to_int hdr.c_uid);
-  printf "gid:      %u\n"  (Uint32.to_int hdr.c_gid);
-  printf "nlink:    %u\n"  (Uint32.to_int hdr.c_nlink);
-  printf "rdev:     %u\n"  (Uint32.to_int hdr.c_rdev);
-  printf "mtime:    %u\n"  (Uint32.to_int hdr.c_mtime);
-  printf "namesize: %u\n"  (Uint32.to_int hdr.c_namesize);
-  printf "filesize: %u\n"  (Uint32.to_int hdr.c_filesize)
+  printf "magic:    %#o\n" (Int32.to_int hdr.c_magic);
+  printf "dev:      %u\n"  (Int32.to_int hdr.c_dev);
+  printf "ino:      %u\n"  (Int32.to_int hdr.c_ino);
+  printf "mode:     %#o\n" (Int32.to_int hdr.c_mode);
+  printf "uid:      %u\n"  (Int32.to_int hdr.c_uid);
+  printf "gid:      %u\n"  (Int32.to_int hdr.c_gid);
+  printf "nlink:    %u\n"  (Int32.to_int hdr.c_nlink);
+  printf "rdev:     %u\n"  (Int32.to_int hdr.c_rdev);
+  printf "mtime:    %u\n"  (Int32.to_int hdr.c_mtime);
+  printf "namesize: %u\n"  (Int32.to_int hdr.c_namesize);
+  printf "filesize: %u\n"  (Int32.to_int hdr.c_filesize)
 
 (** Print a CPIO entry for debugging. *)
 let print_entry e =
