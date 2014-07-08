@@ -3,7 +3,7 @@ Name:        cpio-odc
 Version:     0.1
 Synopsis:    Simple reader for ODC format CPIO archives
 Authors:     Galois, Inc.
-License:     PROP
+License:     BSD-3-clause
 Plugins:     META (0.3)
 BuildTools:  ocamlbuild
 
